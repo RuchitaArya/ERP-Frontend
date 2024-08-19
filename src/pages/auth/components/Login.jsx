@@ -8,7 +8,8 @@ import { Alert } from "@mui/material";
 // import { CircularProgress } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../../store/slices/authslice";
-import { setUser } from "../../../store/slices/userSlice";
+import {setUser} from "../..//../store/slices/userSlice";
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,11 +37,9 @@ const Login = () => {
 
     try {
       setIsLoading(true);
-      const data = await login(loginData);
-      // console.log(data);h
-      
-      dispatch(setLogin({ accessToken: data.accessToken }));
-      dispatch(setUser({ user: data.user }));
+      const response = await login(loginData);
+      dispatch(setLogin({ accessToken: response.data.accessToken }));
+      dispatch(setUser({ user: response.data.user }));
       navigate("/");
     } catch (err) {
       // console.log(err?.response?.data?.message);
@@ -53,7 +52,7 @@ const Login = () => {
   return (
     <>
       {/* {isLoading && <CircularProgress color="inherit" size={16} ></CircularProgress>} */}
-     {isLoading && <p>Loading.........</p> }
+      {isLoading && <p>Loading.........</p>}
       {isError && <Alert variant="filled" security="error">{isError}</Alert>}
       <div className="w-full h-full flex items-center justify-center bg-blue-100">
         <div className="w-[800px] h-[480px] bg-white rounded-lg flex item-center">
@@ -61,7 +60,7 @@ const Login = () => {
             <img
               className="w-full h-full rounded-lg"
               src="../../../../public/login.jpg"
-              alt="login Image "
+              alt="login Image"
               loading="lazy"
             />
           </div>

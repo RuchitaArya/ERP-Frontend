@@ -8,14 +8,37 @@ export const login = async (data) => {
             headers: {
                 "content-type": "application/json",
             },
+            withCredentials: true,
         });
-        console.log(response);
-    return response;
-    
-} catch (err) {
-        console.log(err)
+       
+        return response;
+    } catch (err) {
         throw err;
     }
-
-
 };
+export const fetchNewAccessToken = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/api/auth/refresh`,
+            {
+                withCredentials: true,
+            }
+        );
+        return response;
+
+    } catch (err) {
+        throw err;
+    }
+}
+export const logout = async () => {
+    try {
+        axios.post(`${baseURL}/api/auth/logout`, {}, {
+            withCredentials: true,
+        });
+        return true;
+    }
+    catch (err) {
+
+        throw err;
+    }
+};
+
